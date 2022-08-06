@@ -9,7 +9,16 @@ def two_entries(input):
 
 def main():
     input = [1721,979,366,299,675,1456]
-    test = two_entries(input)
+
+    f = open("numbers.txt", "r")
+    lines = f.readlines()
+    result = []
+
+    for x in lines:
+        result.append(int(x.rstrip("\n")))
+    print(result)
+    
+    test = two_entries(result)
     print(test)
     
 if __name__ == "__main__":
