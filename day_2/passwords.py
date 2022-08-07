@@ -15,15 +15,14 @@ def passwords(input):
 def main():
  input = [[1,3,"a","abcde"],[1,3,"b","cdefg"],[2,9,"c","ccccccccc"]]
  test = passwords(input)
- #print(test)
 
- f = open("numbers_small.txt", "r")
+ f = open("numbers.txt", "r")
  lines = f.readlines()
  result = []
  bonds =[]
  letters = []
  woerter = []
- tast = []
+
 
  for x in lines:
      y = x.strip("\n")
@@ -40,33 +39,30 @@ def main():
  for c in result:
      lulu = list(c[2])
      woerter.append(lulu)
- print(bonds)
- print(letters)
- print(woerter)
 
  for wort in range(0,len(woerter)):
   woerter[wort].extend(letters[wort])
- print(woerter)
 
- 
+ counts = []
    
  for wort in woerter:
   last_element = (wort.pop())
   count = 0
-  print(last_element)
-  print(wort)
   for i in wort:
    if i == last_element:
     count += 1
-  print(count)
-  for bond in bonds:
-   for y in bond:
-    print(y)
-     
-  
+  counts.append(count)
 
-  
-         
-         
+ for bond in range(0,len(bonds)):
+  bonds[bond].append(counts[bond])
+
+ good_pwd = 0
+
+ for bond in bonds:
+  last_element = bond.pop()
+  if last_element >= int(bond[0]) and last_element <= int(bond[1]):
+   good_pwd +=1
+ print(good_pwd)
+           
 if __name__ == "__main__":
     main()
