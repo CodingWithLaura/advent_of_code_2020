@@ -1,68 +1,98 @@
-def passwords(input):
- liste_wort = []
- valid = 0
- 
- for t in input:
-     wort = list(t[3])
-     count = 0
-     for w in wort:
-         if w == t[2]:
-             count += 1
-     if count >= t[0] and count <= t[1]:
-         valid += 1
- return valid
+def einlesen (datei):
+
+    f = open(datei, "r")
+    lines = f.readlines()
+    result = []
+    bounds = []
+    letters = []
+    woerter = []
     
+    for x in lines:
+        y = x.strip("\n")
+        result.append(y.split(" "))
+
+    for r in result:
+        bound = r[0].split("-")
+        bounds.append(bound)
+
+    for b in result:
+        letter =b[1].strip(":")
+        letters.append(letter)
+
+    for c in result:
+        wort = list(c[2])
+        woerter.append(wort)
+
+    return (letters, bounds, woerter)
+
+
 def main():
- input = [[1,3,"a","abcde"],[1,3,"b","cdefg"],[2,9,"c","ccccccccc"]]
- test = passwords(input)
+    # aufgabe test
+    datei = "numbers.txt"
+    (letters, bounds, woerter) = einlesen(datei)
+    # auswertung1
 
- f = open("numbers.txt", "r")
- lines = f.readlines()
- result = []
- bonds =[]
- letters = []
- woerter = []
+    richtige_anzahl_letter_in_pwd = auswertung1(letters, bounds, woerter)
+    print(richtige_anzahl_letter_in_pwd)
+    richtige_stelle_letter_in_pwd = auswertung2(letters, bounds, woerter)
+    print(richtige_stelle_letter_in_pwd)
 
 
- for x in lines:
-     y = x.strip("\n")
-     result.append(y.split(" "))
-     
- for r in result:
-     blubb = r[0].split("-")
-     bonds.append(blubb)
+def boundcheck(bound, letter_count):
+    min = int(bound[0])
+    max = int(bound[1])
+    if letter_count >= min and letter_count <= max:
+        return True
+    return False
 
- for b in result:
-     lala =b[1].strip(":")
-     letters.append(lala)
 
- for c in result:
-     lulu = list(c[2])
-     woerter.append(lulu)
+def auswertung1(letters, bounds, woerter):
+    # gehen durch alle Einträge
+    # len(woerter) = len(letters) = len(bounds)
+    count_good_pwd = 0
+    length = len(woerter)
+    for index in range(0, length):
+        letter = letters[index]
+        bound = bounds[index]
+        wort = woerter[index]
+        letter_count = 0
 
- for wort in range(0,len(woerter)):
-  woerter[wort].extend(letters[wort])
+        for char in wort:
+            if char == letter:
+                letter_count += 1
 
- counts = []
-   
- for wort in woerter:
-  last_element = (wort.pop())
-  count = 0
-  for i in wort:
-   if i == last_element:
-    count += 1
-  counts.append(count)
+        # boundcheck
+        if boundcheck(bound, letter_count):
+            count_good_pwd += 1
+            
+    return count_good_pwd
 
- for bond in range(0,len(bonds)):
-  bonds[bond].append(counts[bond])
+def auswertung2(letters, bounds, woerter):
+    # gehen durch alle Einträge
+    # len(woerter) = len(letters) = len(bounds)
+    count_good_pwd = 0
+    length = len(woerter)
+    for index in range(0, length):
+        letter = letters[index]
+        bound = bounds[index]
+        wort = woerter[index]
+        stelle1 = int(bound[0])-1
+        stelle2 = int(bound[1])-1
+        
+        len_wort = len(wort)
+        stelle1_ok = False
+        stelle2_ok = False
+        if stelle1 < len_wort:
+            letter_an_stelle1 = wort[stelle1]
+            if letter == letter_an_stelle1:
+                stelle1_ok = True
+        if stelle2 < len_wort:
+            letter_an_stelle2 = wort[stelle2]
+            if letter == letter_an_stelle2:
+                stelle2_ok = True
+        if stelle1_ok ^ stelle2_ok: # ^ = xor
+            count_good_pwd += 1
+    return count_good_pwd        
 
- good_pwd = 0
-
- for bond in bonds:
-  last_element = bond.pop()
-  if last_element >= int(bond[0]) and last_element <= int(bond[1]):
-   good_pwd +=1
- print(good_pwd)
-           
 if __name__ == "__main__":
     main()
