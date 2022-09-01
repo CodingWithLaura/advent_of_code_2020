@@ -7,7 +7,6 @@ def einlesen(input_path):
         instruction_line = line.split('\n')
         instruction_and_number = instruction_line[0].split(' ')
         instructions.append(instruction_and_number)
-        
     return instructions
 
 def execute_instructions(instructions):
@@ -22,18 +21,15 @@ def execute_instructions(instructions):
             akku += int(instructions[i][1])
             durchlaufene_indizes.append(i)
             i += 1
-            print(akku)
         if instructions[i][0] == 'jmp':
             durchlaufene_indizes.append(i)
             i += int(instructions[i][1])
-            print("hey")
-            print(i)
-        print(akku)
-    print(durchlaufene_indizes)
+    return akku
 
 def main():
-    test = einlesen("input_small.txt")
-    execute_instructions(test)
+    input = einlesen("input.txt")
+    result = execute_instructions(input)
+    print(result)
     
 
 if __name__ == "__main__":
