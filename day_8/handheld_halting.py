@@ -13,23 +13,22 @@ def einlesen(input_path):
 def execute_instructions(instructions):
     akku = 0
     durchlaufene_indizes = []
-
-    for i in range (0,len(instructions)):
-        while i not in durchlaufene_indizes:
-            print(instructions[i][0])
-            print(instructions[i][1])
-            if instructions[i][0] == 'nop':
-                durchlaufene_indizes.append(i)
-            if instructions[i][0] == 'acc':
-                akku += int(instructions[i][1])
-                durchlaufene_indizes.append(i)
-            if instructions[i][0] == 'jmp':
-            #kp vllt i + int?
-                i += int(instructions[i][1])
-                print("hey")
-                print(i)
-                durchlaufene_indizes.append(i)
-    print(akku)
+    i = 0
+    while i not in durchlaufene_indizes:
+        if instructions[i][0] == 'nop':
+            durchlaufene_indizes.append(i)
+            i += 1
+        if instructions[i][0] == 'acc':
+            akku += int(instructions[i][1])
+            durchlaufene_indizes.append(i)
+            i += 1
+            print(akku)
+        if instructions[i][0] == 'jmp':
+            durchlaufene_indizes.append(i)
+            i += int(instructions[i][1])
+            print("hey")
+            print(i)
+        print(akku)
     print(durchlaufene_indizes)
 
 def main():
