@@ -9,18 +9,24 @@ def einlesen(input_path):
     return numbers_to_check
 
 def check_number_in_window(window, number_to_check):
-    for n in range(0, len(window)):
-        number_1 = window[n]
-        for m in range(0,len(window)):
-            number_2 = window[m]
-            if number_1 + number_2 == number_to_check:
-                return True
+    results = []
+    for i in range(0,len(window)):
+        for j in range(i+1,len(window)):
+            #print(window[i])
+            #print(window[j])
+            new_number = window[i] + window[j]
+            if new_number == number_to_check:
+                results.append(True)
             else:
-                return False
+                results.append(False)
+    if True in results:
+        return True
+    else:
+        return False
 
 def is_number_a_sum_of_window_numbers(numbers):
     i = 0
-    while i < (len(numbers) - 6):
+    while i < (len(numbers)-5):
         x1 = numbers[i]
         x2 = numbers[i+1]
         x3 = numbers[i+2]
@@ -29,17 +35,14 @@ def is_number_a_sum_of_window_numbers(numbers):
         window = [x1,x2,x3,x4,x5]
         number = numbers[i+5]
         isok = check_number_in_window(window,number)
-        print(isok)
         if isok == False:
-            print("yeah")
+            print(number)
         i += 1
     
 
 def main():
     numbers = einlesen("small_input.txt")
-    print(numbers)
     result = is_number_a_sum_of_window_numbers(numbers)
-    print(result)
-
+            
 if __name__ == "__main__":
     main()
