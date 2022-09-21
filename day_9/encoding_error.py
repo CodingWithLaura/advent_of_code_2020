@@ -12,17 +12,10 @@ def check_number_in_window(window, number_to_check):
     results = []
     for i in range(0,len(window)):
         for j in range(i+1,len(window)):
-            #print(window[i])
-            #print(window[j])
             new_number = window[i] + window[j]
             if new_number == number_to_check:
-                results.append(True)
-            else:
-                results.append(False)
-    if True in results:
-        return True
-    else:
-        return False
+                return True
+    return False
 
 def is_number_a_sum_of_window_numbers(numbers):
     i = 0
