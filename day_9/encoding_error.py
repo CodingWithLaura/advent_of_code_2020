@@ -17,25 +17,22 @@ def check_number_in_window(window, number_to_check):
                 return True
     return False
 
-def is_number_a_sum_of_window_numbers(numbers):
+def is_number_a_sum_of_window_numbers(numbers,window_size):
     i = 0
-    while i < (len(numbers)-5):
-        x1 = numbers[i]
-        x2 = numbers[i+1]
-        x3 = numbers[i+2]
-        x4 = numbers[i+3]
-        x5 = numbers[i+4]
-        window = [x1,x2,x3,x4,x5]
-        number = numbers[i+5]
+    while i < (len(numbers)-window_size):
+        window = []
+        for j in range(0,window_size):
+            x = numbers[i + j]
+            window.append(x)
+        number = numbers[i+window_size]
         isok = check_number_in_window(window,number)
         if isok == False:
             print(number)
         i += 1
-    
 
 def main():
-    numbers = einlesen("small_input.txt")
-    result = is_number_a_sum_of_window_numbers(numbers)
+    numbers = einlesen("input.txt")
+    result = is_number_a_sum_of_window_numbers(numbers,25)
             
 if __name__ == "__main__":
     main()
