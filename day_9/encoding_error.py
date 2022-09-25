@@ -24,15 +24,47 @@ def is_number_a_sum_of_window_numbers(numbers,window_size):
         for j in range(0,window_size):
             x = numbers[i + j]
             window.append(x)
-        number = numbers[i+window_size]
+        index = i+window_size    
+        number = numbers[index]
         isok = check_number_in_window(window,number)
         if isok == False:
-            print(number)
+            return ((number, index))
         i += 1
+    return (0, 0)
+
+def is_number_sum_of_contiguous_numbers(number, numbers, index):
+    for i in range(0, len(numbers) - 1):
+        sum = numbers[i]
+        j = 1
+        while (sum < number):
+            if (i+j) == index :
+                continue
+            sum += numbers[i + j]
+            if (sum == number):
+                print("gewonnen")
+                return ((i, j))
+            j += 1
+            if (i+j) > len(numbers):
+                break
+            
+    return (-1,-1)         
+    
 
 def main():
     numbers = einlesen("input.txt")
-    result = is_number_a_sum_of_window_numbers(numbers,25)
-            
+    window_size = 25
+    (number, index) = is_number_a_sum_of_window_numbers(numbers, window_size)
+    print("number: {}, index: {}".format(number, index))
+    (start_index, offset) = is_number_sum_of_contiguous_numbers(number, numbers, index)
+    print("startindex: {}, offset: {}".format(start_index, offset))
+    if start_index > -1:
+        print("contigues set: {}".format(numbers[start_index : start_index+offset+1]))
+    numbers_range = numbers[start_index : start_index + offset + 1]
+    min_number_of_range = min(numbers_range)
+    max_number_of_range = max(numbers_range)
+    result = min_number_of_range + max_number_of_range
+    print("The result of part two is: {}".format(result))
+    
+    
 if __name__ == "__main__":
     main()
